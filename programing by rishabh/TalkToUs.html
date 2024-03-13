@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attractive Chatbot</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.header {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 2px solid #fff;
+}
+
+.chatbox {
+    padding: 20px;
+    overflow-y: scroll;
+    height: 300px;
+    scroll-behavior: smooth;
+}
+
+.user-message {
+    background-color: #f2f2f2;
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    max-width: 70%;
+    animation: slideInLeft 0.5s ease;
+}
+
+.bot-message {
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    max-width: 70%;
+    align-self: flex-end;
+    animation: slideInRight 0.5s ease;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+.input-field {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.send-btn {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.send-btn:hover {
+    background-color: #45a049;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">Chatbot</div>
+    <div class="chatbox" id="chatbox"></div>
+    <div class="input-container">
+        <input type="text" class="input-field" id="userInput" placeholder="Type your message...">
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+const chatbox = document.getElementById('chatbox');
+
+function sendMessage() {
+    const userInput = document.getElementById('userInput').value.trim();
+    if (userInput !== '') {
+        displayUserMessage(userInput);
+        processUserInput(userInput);
+        document.getElementById('userInput').value = '';
+    }
+}
+
+function displayUserMessage(message) {
+    const userMessageElement = document.createElement('div');
+    userMessageElement.classList.add('user-message');
+    userMessageElement.textContent = message;
+    chatbox.appendChild(userMessageElement);
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+function displayBotMessage(message) {
+    const botMessageElement = document.createElement('div');
+    botMessageElement.classList.add('bot-message');
+    botMessageElement.textContent = message;
+    chatbox.appendChild(botMessageElement);
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+function processUserInput(input) {
+    let botResponse;
+
+    // Answering questions
+    if (input.toLowerCase().includes('what is this website about')) {
+        botResponse = "This website is about Blox Fruits.";
+    } else if (input.toLowerCase().includes('what is blox fruits')) {
+        botResponse = "Blox Fruits is a popular game where players explore, fight bosses, and find fruits with powers!";
+    } else if (input.toLowerCase().includes('how to redirect to main page')) {
+        botResponse = "To redirect to the main page, you can click on the website logo or use the navigation bar.";
+    } else if (input.toLowerCase().includes('hey there, how are you')) {
+        botResponse = "Hey there! I'm doing well, thank you for asking.";
+    } else if (input.toLowerCase().includes('redirect me to main page')) {
+        botResponse = "Sure! Redirecting you to the main page...";
+        setTimeout(() => {
+            window.location.href = 'file:///D:/programing%20by%20rishabh/index.html';
+        }, 2000);
+    } else if (input.toLowerCase().includes('may i redirect you to the registration page')) {
+        botResponse = "Sure! We have a registration system before the main page. Redirecting you to register...";
+        setTimeout(() => {
+            if (confirm("Would you like to be redirected to the registration page?")) {
+                window.location.href = 'file:///D:/programing%20by%20rishabh/index.html';
+            } else {
+                displayBotMessage("Okay, no problem.");
+            }
+        }, 2000);
+    } else {
+        // Default response for unrecognized input
+        botResponse = "I'm sorry, I don't understand that question.";
+    }
+
+    displayBotMessage(botResponse);
+}
+</script>
+
+</body>
+</html>
